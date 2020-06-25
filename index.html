@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, you can run arbitary commands here. </h1>
+    <h1>Please do not run any harmful commands</h1>
+
+    <p id="consoleOutput">> &nbsp;</p>
+    <input id="consoleInput" type="text">
+    <button type="button" id="runCommand">Execute</button>
+
+    <script>
+        let ws = new WebSocket("ws://localhost:8080");
+        let consoleOutput = document.getElementById('consoleOutput');
+        let consoleInput = document.getElementById('consoleInput');
+        let runCommandButton = document.getElementById('runCommand');
+
+        runCommandButton.onclick = function (){
+            let command = consoleInput.value;
+            console.log("im here")
+            consoleInput.value = "";
+            ws.send(command);
+        }
+
+        ws.onmessage = function (output){
+            consoleOutput.innerText += output.data; 
+        }
+
+    </script>
+</body>
+</html>
